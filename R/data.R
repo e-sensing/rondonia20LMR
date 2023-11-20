@@ -1,6 +1,6 @@
 #' @title Yearly samples of 9 classes on Amazonia biome from Sentinel-2 images
 #' @docType data
-#' @name samples_deforestation_rondonia
+#' @name deforestation_samples
 #' @keywords datasets
 #' @description
 #' A dataset containing a tibble with time series samples from Brazilian
@@ -26,6 +26,6 @@
 #'  bands B02, B03, B04, B05, B07, B8A, B08, B11, B12
 #'  from 2022-01-05 to 2022-12-23 in 16-day intervals.
 #'
-#' @usage data("samples_deforestation_rondonia")
+#' @usage data("deforestation_samples_v18")
 #'
 NULL
