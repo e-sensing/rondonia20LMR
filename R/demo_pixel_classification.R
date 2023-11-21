@@ -5,9 +5,7 @@ library(tibble)
 library(sits)
 # 2. Get the training samples
 deforestation_samples_v18 <- readRDS(
-        system.file("extdata/samples/deforestation_samples_v18.rds", 
-                    package = "rondonia20LMR")
-        )
+        file = "./inst/extdata/samples/deforestation_samples_v18.rds")
 
 # 3. Show patterns of classes in the training set
 deforestation_samples_v18  |> 
@@ -16,7 +14,7 @@ deforestation_samples_v18  |>
      plot()
 
 # 4. Build a data cube from pre-processed images and plot a band combination
-data_dir <- system.file("extdata/images", package = "rondonia20LMR")
+data_dir <- "./inst/extdata/images"
 
 cube_20LMR <- sits_cube(
      source = "MPC",
@@ -41,14 +39,15 @@ rfor_model <- sits_train(
 
 # 6. Classify the data cube 
 # Create a directory to store the result
-dir.create("~/rondonia20LMR")
+dir.create("~/rondonia20LMR_results")
+output_dir <- "~/rondonia20LMR_results"
 # Change multicores and memsize to fit our environment
 cube_20LMR_probs <- sits_classify(
         data = cube_20LMR,
         ml_model = rfor_model,
         multicores = 4,
         memsize = 24,
-        output_dir = "~/rondonia20LMR"
+        output_dir = output_dir
 )
 plot(cube_20LMR_probs, label = "Forest", palette = "YlGn")
 
@@ -57,7 +56,7 @@ cube_20LMR_bayes <- sits_smooth(
         cube = cube_20LMR_probs,
         multicores = 4,
         memsize = 24,
-        output_dir = "~/rondonia20LMR"
+        output_dir = output_dir
 )
 plot(cube_20LMR_bayes, label = "Forest", palette = "YlGn")
 
@@ -67,6 +66,6 @@ cube_20LMR_map <- sits_label_classification(
         cube = cube_20LMR_bayes,
         multicores = 4,
         memsize = 24,
-        output_dir = "~/rondonia20LMR"
+        output_dir = output_dir
 )
 plot(cube_20LMR_map)
